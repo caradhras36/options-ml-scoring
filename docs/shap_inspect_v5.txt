@@ -1,0 +1,282 @@
+Loading data/training.csv...
+Loading ./models/hit50_model.json...
+
+==========================================================================================
+Sample 1: SPY $451 CALL 2022-09-16  (29 DTE)
+  Underlying: $427.84  Moneyness: 1.054  Delta: +0.101
+  → ACTUAL: hit_50pct=True  outcome=full_win  max_profit=+98.80%  EV=$82
+  → MODEL : P(hit_50pct)=51.5%
+
+  Feature                     Value        SHAP   Impact
+  ---------------------- ----------    --------   ------------------------------
+  delta                       0.101    +  0.288   ✅ ██
+  resistance_score             0.64    +  0.243   ✅ ██
+  ivp                            52     -0.198   ❌ █
+  moneyness                   1.054     -0.174   ❌ █
+  iv                          0.145     -0.169   ❌ █
+  days_to_earnings              999    +  0.161   ✅ █
+  ivr                            10     -0.121   ❌ █
+  bb_position                  0.82     -0.078   ❌ 
+  theta                      -0.051    +  0.073   ✅ 
+  vega                        0.216    +  0.063   ✅ 
+  gamma                      0.0100     -0.061   ❌ 
+  credit_received               $83    +  0.051   ✅ 
+  macd_signal                 1.000     -0.039   ❌ 
+  max_loss                  $45,100     -0.039   ❌ 
+  dte                            29    +  0.033   ✅ 
+  annualized_return           0.024    +  0.031   ✅ 
+  rsi14                          70     -0.021   ❌ 
+  post_earnings               0.000    +  0.009   ✅ 
+  earnings_in_window          0.000    +  0.006   ✅ 
+
+==========================================================================================
+Sample 2: QQQ $308 CALL 2022-10-21  (29 DTE)
+  Underlying: $280.08  Moneyness: 1.100  Delta: +0.126
+  → ACTUAL: hit_50pct=True  outcome=full_win  max_profit=+99.62%  EV=$133
+  → MODEL : P(hit_50pct)=72.8%
+
+  Feature                     Value        SHAP   Impact
+  ---------------------- ----------    --------   ------------------------------
+  rsi14                          32    +  0.646   ✅ ██████
+  moneyness                   1.100     -0.320   ❌ ███
+  delta                       0.126    +  0.187   ✅ █
+  ivr                            36    +  0.176   ✅ █
+  days_to_earnings              999    +  0.123   ✅ █
+  resistance_score             0.00     -0.109   ❌ █
+  macd_signal                -1.000    +  0.083   ✅ 
+  bb_position                  0.00    +  0.074   ✅ 
+  dte                            29    +  0.070   ✅ 
+  max_loss                  $30,800     -0.062   ❌ 
+  annualized_return           0.060    +  0.050   ✅ 
+  gamma                      0.0094     -0.050   ❌ 
+  theta                      -0.079    +  0.048   ✅ 
+  credit_received              $133    +  0.047   ✅ 
+  vega                        0.166    +  0.034   ✅ 
+  post_earnings               0.000     -0.022   ❌ 
+  ivp                            79    +  0.004   ✅ 
+  earnings_in_window          0.000    +  0.003   ✅ 
+  iv                          0.275    +  0.001   ✅ 
+
+==========================================================================================
+Sample 3: SPX $3890 CALL 2021-04-09  (36 DTE)
+  Underlying: $3769.66  Moneyness: 1.032  Delta: +0.303
+  → ACTUAL: hit_50pct=False  outcome=loss  max_profit=-300.00%  EV=$-12268
+  → MODEL : P(hit_50pct)=11.5%
+
+  Feature                     Value        SHAP   Impact
+  ---------------------- ----------    --------   ------------------------------
+  delta                       0.303     -0.879   ❌ ████████
+  rsi14                          40     -0.613   ❌ ██████
+  moneyness                   1.032     -0.604   ❌ ██████
+  days_to_earnings              999    +  0.183   ✅ █
+  ivr                            17     -0.170   ❌ █
+  bb_position                  0.00    +  0.125   ✅ █
+  max_loss                 $389,000    +  0.092   ✅ 
+  resistance_score             0.38     -0.091   ❌ 
+  theta                      -1.043    +  0.088   ✅ 
+  vega                        4.175     -0.088   ❌ 
+  ivp                            40     -0.078   ❌ 
+  iv                          0.183     -0.072   ❌ 
+  macd_signal                -1.000    +  0.051   ✅ 
+  gamma                      0.0016    +  0.035   ✅ 
+  annualized_return           0.110     -0.022   ❌ 
+  dte                            36    +  0.015   ✅ 
+  credit_received            $4,089     -0.011   ❌ 
+  post_earnings               0.000     -0.006   ❌ 
+  earnings_in_window          0.000    +  0.002   ✅ 
+
+==========================================================================================
+Sample 4: SPY $456 CALL 2021-09-17  (22 DTE)
+  Underlying: $446.33  Moneyness: 1.022  Delta: +0.165
+  → ACTUAL: hit_50pct=True  outcome=full_win  max_profit=+99.44%  EV=$88
+  → MODEL : P(hit_50pct)=63.9%
+
+  Feature                     Value        SHAP   Impact
+  ---------------------- ----------    --------   ------------------------------
+  ivp                            40    +  0.411   ✅ ████
+  moneyness                   1.022     -0.338   ❌ ███
+  ivr                            14     -0.204   ❌ ██
+  iv                          0.092    +  0.177   ✅ █
+  delta                       0.165    +  0.150   ✅ █
+  days_to_earnings              999    +  0.148   ✅ █
+  rsi14                          59     -0.123   ❌ █
+  annualized_return           0.033    +  0.117   ✅ █
+  resistance_score             0.66    +  0.112   ✅ █
+  theta                      -0.052    +  0.078   ✅ 
+  macd_signal                -1.000    +  0.033   ✅ 
+  gamma                      0.0241     -0.028   ❌ 
+  max_loss                  $45,600    +  0.026   ✅ 
+  credit_received               $89     -0.013   ❌ 
+  vega                        0.278    +  0.012   ✅ 
+  bb_position                  0.74    +  0.006   ✅ 
+  earnings_in_window          0.000    +  0.005   ✅ 
+  dte                            22    +  0.004   ✅ 
+  post_earnings               0.000     -0.001   ❌ 
+
+==========================================================================================
+Sample 5: SPX $4080 CALL 2021-04-30  (44 DTE)
+  Underlying: $3974.80  Moneyness: 1.026  Delta: +0.303
+  → ACTUAL: hit_50pct=True  outcome=loss  max_profit=-167.90%  EV=$-6171
+  → MODEL : P(hit_50pct)=47.3%
+
+  Feature                     Value        SHAP   Impact
+  ---------------------- ----------    --------   ------------------------------
+  delta                       0.303     -0.510   ❌ █████
+  rsi14                          61    +  0.469   ✅ ████
+  max_loss                 $408,000    +  0.459   ✅ ████
+  moneyness                   1.026     -0.428   ❌ ████
+  iv                          0.140     -0.280   ❌ ██
+  ivr                          9.94     -0.268   ❌ ██
+  days_to_earnings              999    +  0.245   ✅ ██
+  resistance_score             0.76    +  0.135   ✅ █
+  theta                      -0.756    +  0.069   ✅ 
+  vega                        4.864     -0.066   ❌ 
+  gamma                      0.0018    +  0.050   ✅ 
+  dte                            44     -0.024   ❌ 
+  ivp                          5.56    +  0.020   ✅ 
+  bb_position                  0.88    +  0.020   ✅ 
+  macd_signal                 1.000     -0.019   ❌ 
+  earnings_in_window          0.000    +  0.013   ✅ 
+  annualized_return           0.077    +  0.013   ✅ 
+  credit_received            $3,675     -0.007   ❌ 
+  post_earnings               0.000    +  0.001   ✅ 
+
+==========================================================================================
+Sample 6: SPX $4055 PUT 2023-06-02  (22 DTE)
+  Underlying: $4130.59  Moneyness: 0.982  Delta: -0.287
+  → ACTUAL: hit_50pct=True  outcome=full_win  max_profit=+99.92%  EV=$2983
+  → MODEL : P(hit_50pct)=78.4%
+
+  Feature                     Value        SHAP   Impact
+  ---------------------- ----------    --------   ------------------------------
+  ivp                          0.79    +  0.881   ✅ ████████
+  days_to_earnings              999    +  0.299   ✅ ██
+  ivr                            43    +  0.242   ✅ ██
+  moneyness                   0.982     -0.216   ❌ ██
+  bb_position                  0.53     -0.199   ❌ █
+  delta                      -0.287    +  0.194   ✅ █
+  max_loss                 $405,500    +  0.182   ✅ █
+  theta                      -1.077    +  0.170   ✅ █
+  resistance_score             0.00     -0.125   ❌ █
+  macd_signal                -1.000    +  0.105   ✅ █
+  iv                          0.159     -0.095   ❌ 
+  rsi14                          54     -0.081   ❌ 
+  gamma                      0.0021     -0.046   ❌ 
+  dte                            22     -0.027   ❌ 
+  annualized_return           0.122    +  0.010   ✅ 
+  credit_received            $2,985     -0.006   ❌ 
+  earnings_in_window          0.000    +  0.003   ✅ 
+  vega                        3.512     -0.003   ❌ 
+  post_earnings               0.000    +  0.002   ✅ 
+
+==========================================================================================
+Sample 7: TSLA $945 PUT 2022-01-28  (29 DTE)
+  Underlying: $1070.85  Moneyness: 0.882  Delta: -0.215
+  → ACTUAL: hit_50pct=True  outcome=loss  max_profit=-283.04%  EV=$-7260
+  → MODEL : P(hit_50pct)=53.3%
+
+  Feature                     Value        SHAP   Impact
+  ---------------------- ----------    --------   ------------------------------
+  days_to_earnings               27     -1.153   ❌ ███████████
+  moneyness                   0.882    +  0.622   ✅ ██████
+  max_loss                  $94,500     -0.590   ❌ █████
+  iv                          0.626    +  0.562   ✅ █████
+  ivr                            36    +  0.308   ✅ ███
+  theta                      -0.945    +  0.266   ✅ ██
+  delta                      -0.215    +  0.189   ✅ █
+  resistance_score             0.00     -0.153   ❌ █
+  rsi14                          55    +  0.107   ✅ █
+  annualized_return           0.342     -0.083   ❌ 
+  gamma                      0.0016    +  0.044   ✅ 
+  dte                            29    +  0.036   ✅ 
+  bb_position                  0.74     -0.036   ❌ 
+  vega                        0.893     -0.033   ❌ 
+  macd_signal                 1.000    +  0.022   ✅ 
+  ivp                            57    +  0.013   ✅ 
+  credit_received            $2,565    +  0.007   ✅ 
+  post_earnings               0.000    +  0.003   ✅ 
+  earnings_in_window          1.000    +  0.002   ✅ 
+
+==========================================================================================
+Sample 8: QQQ $292 PUT 2022-07-22  (46 DTE)
+  Underlying: $307.23  Moneyness: 0.952  Delta: -0.316
+  → ACTUAL: hit_50pct=True  outcome=full_win  max_profit=+99.94%  EV=$780
+  → MODEL : P(hit_50pct)=19.1%
+
+  Feature                     Value        SHAP   Impact
+  ---------------------- ----------    --------   ------------------------------
+  ivr                            71     -0.944   ❌ █████████
+  max_loss                  $29,250     -0.403   ❌ ████
+  days_to_earnings              999    +  0.199   ✅ █
+  iv                          0.326    +  0.170   ✅ █
+  ivp                            85     -0.093   ❌ 
+  resistance_score             0.33     -0.089   ❌ 
+  gamma                      0.0099     -0.086   ❌ 
+  delta                      -0.316     -0.074   ❌ 
+  bb_position                  0.73     -0.058   ❌ 
+  theta                      -0.137     -0.039   ❌ 
+  macd_signal                 1.000     -0.025   ❌ 
+  dte                            46    +  0.025   ✅ 
+  annualized_return           0.212     -0.025   ❌ 
+  vega                        0.391    +  0.013   ✅ 
+  credit_received              $780     -0.011   ❌ 
+  rsi14                          49     -0.009   ❌ 
+  moneyness                   0.952    +  0.008   ✅ 
+  post_earnings               0.000     -0.004   ❌ 
+  earnings_in_window          0.000    +  0.001   ✅ 
+
+==========================================================================================
+Sample 9: SPX $4175 PUT 2022-04-29  (23 DTE)
+  Underlying: $4480.60  Moneyness: 0.932  Delta: -0.130
+  → ACTUAL: hit_50pct=True  outcome=loss  max_profit=-153.55%  EV=$-2810
+  → MODEL : P(hit_50pct)=36.1%
+
+  Feature                     Value        SHAP   Impact
+  ---------------------- ----------    --------   ------------------------------
+  ivr                            64     -0.516   ❌ █████
+  iv                          0.240     -0.332   ❌ ███
+  ivp                            77     -0.277   ❌ ██
+  days_to_earnings              999    +  0.270   ✅ ██
+  max_loss                 $417,500    +  0.256   ✅ ██
+  rsi14                          51     -0.242   ❌ ██
+  delta                      -0.130    +  0.214   ✅ ██
+  bb_position                  0.55     -0.195   ❌ █
+  gamma                      0.0008    +  0.177   ✅ █
+  theta                      -1.298    +  0.080   ✅ 
+  vega                        2.412     -0.071   ❌ 
+  moneyness                   0.932    +  0.038   ✅ 
+  resistance_score             0.49    +  0.038   ✅ 
+  macd_signal                 1.000     -0.014   ❌ 
+  annualized_return           0.070    +  0.007   ✅ 
+  credit_received            $1,830     -0.007   ❌ 
+  dte                            23    +  0.004   ✅ 
+  earnings_in_window          0.000    +  0.001   ✅ 
+  post_earnings               0.000    +  0.000   ✅ 
+
+==========================================================================================
+Sample 10: SPX $3570 PUT 2022-07-15  (53 DTE)
+  Underlying: $3972.82  Moneyness: 0.899  Delta: -0.173
+  → ACTUAL: hit_50pct=True  outcome=full_win  max_profit=+99.94%  EV=$4472
+  → MODEL : P(hit_50pct)=99.6%
+
+  Feature                     Value        SHAP   Impact
+  ---------------------- ----------    --------   ------------------------------
+  max_loss                 $357,000    +  1.594   ✅ ███████████████
+  moneyness                   0.899    +  0.618   ✅ ██████
+  resistance_score             1.00    +  0.587   ✅ █████
+  days_to_earnings              999    +  0.424   ✅ ████
+  ivr                            88    +  0.395   ✅ ███
+  dte                            53    +  0.317   ✅ ███
+  delta                      -0.173    +  0.308   ✅ ███
+  gamma                      0.0006    +  0.300   ✅ ██
+  rsi14                          40    +  0.289   ✅ ██
+  iv                          0.298    +  0.228   ✅ ██
+  theta                      -1.160    +  0.225   ✅ ██
+  ivp                            89    +  0.169   ✅ █
+  bb_position                  0.28    +  0.103   ✅ █
+  vega                        3.897     -0.043   ❌ 
+  annualized_return           0.086    +  0.027   ✅ 
+  macd_signal                -1.000    +  0.022   ✅ 
+  credit_received            $4,475     -0.020   ❌ 
+  post_earnings               0.000    +  0.003   ✅ 
+  earnings_in_window          0.000    +  0.001   ✅ 

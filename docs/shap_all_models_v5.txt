@@ -1,0 +1,194 @@
+Loading data/training.csv...
+Loading models...
+
+====================================================================================================
+Sample 1: SPY $451 CALL 2022-09-16  (29 DTE)
+  Underlying: $427.84  Moneyness: 1.054  Delta: +0.101
+  ACTUAL: hit=True  outcome=full_win  max_profit=+98.80%  EV=$82  days_to_50=1.0
+
+  MODEL PREDICTIONS:
+    1. hit_50pct:       51.5%
+    2. max_profit_pct: +46.89%
+    3. days_to_50pct:     3.4 days  (only meaningful if hit)
+    4. expected_value: $      55
+    5. outcome:        full_win  (probs: breakeven=8%, full_win=55%, loss=18%, partial_win=19%)
+
+  [hit_50pct] top 5 factors:
+    delta                     0.101  ✅ + 0.288  ██
+    resistance_score           0.64  ✅ + 0.243  █
+    ivp                          52  ❌ -0.198  █
+    moneyness                 1.054  ❌ -0.174  █
+    iv                        0.145  ❌ -0.169  █
+
+  [max_profit_pct] top 5 factors:
+    iv                        0.145  ❌ -0.321  ██
+    delta                     0.101  ✅ + 0.168  █
+    rsi14                        70  ✅ + 0.134  █
+    ivp                          52  ❌ -0.127  █
+    resistance_score           0.64  ✅ + 0.073  
+
+  [days_to_50pct] top 5 factors:
+    dte                          29  ❌ -1.424  ███████████
+    max_loss                $45,100  ❌ -0.742  █████
+    ivp                          52  ❌ -0.684  █████
+    annualized_return         0.024  ❌ -0.611  ████
+    resistance_score           0.64  ❌ -0.299  ██
+
+  [expected_value] top 5 factors:
+    iv                        0.145  ❌ -409.913  ████████████████████
+    gamma                    0.0100  ❌ -203.181  ████████████████████
+    moneyness                 1.054  ❌ -174.868  ████████████████████
+    max_loss                $45,100  ❌ -172.840  ████████████████████
+    vega                      0.216  ✅ +128.049  ████████████████████
+
+  [outcome (full_win)] top 5 factors:
+    delta                     0.101  ✅ + 0.370  ██
+    rsi14                        70  ✅ + 0.170  █
+    resistance_score           0.64  ✅ + 0.147  █
+    credit_received             $83  ✅ + 0.110  
+    moneyness                 1.054  ❌ -0.096  
+
+
+====================================================================================================
+Sample 2: QQQ $308 CALL 2022-10-21  (29 DTE)
+  Underlying: $280.08  Moneyness: 1.100  Delta: +0.126
+  ACTUAL: hit=True  outcome=full_win  max_profit=+99.62%  EV=$133  days_to_50=5.0
+
+  MODEL PREDICTIONS:
+    1. hit_50pct:       72.8%
+    2. max_profit_pct: +93.01%
+    3. days_to_50pct:     5.6 days  (only meaningful if hit)
+    4. expected_value: $      88
+    5. outcome:        full_win  (probs: breakeven=8%, full_win=54%, loss=28%, partial_win=10%)
+
+  [hit_50pct] top 5 factors:
+    rsi14                        32  ✅ + 0.646  █████
+    moneyness                 1.100  ❌ -0.320  ██
+    delta                     0.126  ✅ + 0.187  █
+    ivr                          36  ✅ + 0.176  █
+    days_to_earnings            999  ✅ + 0.123  
+
+  [max_profit_pct] top 5 factors:
+    delta                     0.126  ✅ + 0.219  █
+    ivp                          79  ❌ -0.097  
+    rsi14                        32  ✅ + 0.093  
+    iv                        0.275  ✅ + 0.078  
+    ivr                          36  ✅ + 0.076  
+
+  [days_to_50pct] top 5 factors:
+    dte                          29  ❌ -1.164  █████████
+    bb_position                0.00  ❌ -0.897  ███████
+    ivp                          79  ❌ -0.459  ███
+    rsi14                        32  ✅ + 0.422  ███
+    ivr                          36  ❌ -0.410  ███
+
+  [expected_value] top 5 factors:
+    gamma                    0.0094  ❌ -220.501  ████████████████████
+    moneyness                 1.100  ❌ -214.634  ████████████████████
+    theta                    -0.079  ❌ -117.950  ████████████████████
+    ivp                          79  ❌ -113.981  ████████████████████
+    bb_position                0.00  ✅ +99.975  ████████████████████
+
+  [outcome (full_win)] top 5 factors:
+    ivr                          36  ✅ + 0.340  ██
+    delta                     0.126  ✅ + 0.260  ██
+    max_loss                $30,800  ✅ + 0.194  █
+    credit_received            $133  ✅ + 0.153  █
+    macd_signal              -1.000  ✅ + 0.148  █
+
+
+====================================================================================================
+Sample 3: SPX $4055 PUT 2023-06-02  (22 DTE)
+  Underlying: $4130.59  Moneyness: 0.982  Delta: -0.287
+  ACTUAL: hit=True  outcome=full_win  max_profit=+99.92%  EV=$2983  days_to_50=5.0
+
+  MODEL PREDICTIONS:
+    1. hit_50pct:       78.4%
+    2. max_profit_pct: +69.31%
+    3. days_to_50pct:     5.7 days  (only meaningful if hit)
+    4. expected_value: $   2,723
+    5. outcome:        full_win  (probs: breakeven=13%, full_win=68%, loss=9%, partial_win=9%)
+
+  [hit_50pct] top 5 factors:
+    ivp                        0.79  ✅ + 0.881  ███████
+    days_to_earnings            999  ✅ + 0.299  ██
+    ivr                          43  ✅ + 0.242  █
+    moneyness                 0.982  ❌ -0.216  █
+    bb_position                0.53  ❌ -0.199  █
+
+  [max_profit_pct] top 5 factors:
+    ivp                        0.79  ✅ + 0.244  █
+    iv                        0.159  ❌ -0.184  █
+    ivr                          43  ✅ + 0.174  █
+    days_to_earnings            999  ✅ + 0.099  
+    rsi14                        54  ❌ -0.086  
+
+  [days_to_50pct] top 5 factors:
+    dte                          22  ❌ -2.823  ████████████████████
+    iv                        0.159  ✅ + 0.605  ████
+    rsi14                        54  ❌ -0.586  ████
+    resistance_score           0.00  ✅ + 0.450  ███
+    max_loss               $405,500  ✅ + 0.301  ██
+
+  [expected_value] top 5 factors:
+    theta                    -1.077  ✅ +768.348  ████████████████████
+    ivp                        0.79  ✅ +735.482  ████████████████████
+    ivr                          43  ✅ +589.102  ████████████████████
+    delta                    -0.287  ✅ +504.702  ████████████████████
+    vega                      3.512  ❌ -312.550  ████████████████████
+
+  [outcome (full_win)] top 5 factors:
+    ivp                        0.79  ✅ + 0.407  ███
+    ivr                          43  ✅ + 0.343  ██
+    max_loss               $405,500  ✅ + 0.285  ██
+    delta                    -0.287  ✅ + 0.242  █
+    theta                    -1.077  ✅ + 0.241  █
+
+
+====================================================================================================
+Sample 4: TSLA $945 PUT 2022-01-28  (29 DTE)
+  Underlying: $1070.85  Moneyness: 0.882  Delta: -0.215
+  ACTUAL: hit=True  outcome=loss  max_profit=-283.04%  EV=$-7260  days_to_50=2.0
+
+  MODEL PREDICTIONS:
+    1. hit_50pct:       53.3%
+    2. max_profit_pct: -28.58%
+    3. days_to_50pct:     5.7 days  (only meaningful if hit)
+    4. expected_value: $    -958
+    5. outcome:        loss  (probs: breakeven=31%, full_win=14%, loss=37%, partial_win=18%)
+
+  [hit_50pct] top 5 factors:
+    days_to_earnings             27  ❌ -1.153  █████████
+    moneyness                 0.882  ✅ + 0.622  ████
+    max_loss                $94,500  ❌ -0.590  ████
+    iv                        0.626  ✅ + 0.562  ████
+    ivr                          36  ✅ + 0.308  ██
+
+  [max_profit_pct] top 5 factors:
+    days_to_earnings             27  ❌ -0.344  ██
+    max_loss                $94,500  ❌ -0.257  ██
+    iv                        0.626  ✅ + 0.239  █
+    earnings_in_window        1.000  ❌ -0.186  █
+    resistance_score           0.00  ❌ -0.064  
+
+  [days_to_50pct] top 5 factors:
+    dte                          29  ❌ -1.340  ██████████
+    rsi14                        55  ❌ -1.232  █████████
+    iv                        0.626  ❌ -0.619  ████
+    ivr                          36  ❌ -0.518  ████
+    max_loss                $94,500  ✅ + 0.513  ████
+
+  [expected_value] top 5 factors:
+    max_loss                $94,500  ❌ -1128.640  ████████████████████
+    days_to_earnings             27  ❌ -287.864  ████████████████████
+    moneyness                 0.882  ❌ -201.821  ████████████████████
+    ivr                          36  ✅ +195.890  ████████████████████
+    resistance_score           0.00  ❌ -175.705  ████████████████████
+
+  [outcome (loss)] top 5 factors:
+    days_to_earnings             27  ✅ + 0.253  ██
+    iv                        0.626  ❌ -0.200  █
+    moneyness                 0.882  ❌ -0.191  █
+    ivp                          57  ✅ + 0.149  █
+    ivr                          36  ❌ -0.116  
+
