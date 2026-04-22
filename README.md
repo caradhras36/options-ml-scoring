@@ -1,8 +1,8 @@
-# options-ml-scoring
+# options-ml-scoring (V7)
 
-A 5-model XGBoost pipeline that scores covered calls and cash-secured puts using 19 features (Greeks, IV regime, technicals, earnings proximity).
+A 5-model XGBoost pipeline that scores covered calls and cash-secured puts using 30 features (Greeks, IV regime, technicals, earnings proximity, momentum, vol risk premium).
 
-Trained on 363K simulated option trades from OptionsDX historical EOD chains (2020-2023) across AAPL, NVDA, QQQ, SPX, SPY, TSLA.
+Trained on 461K simulated option trades from OptionsDX historical EOD chains (2020-2026) across 28 tickers: AAPL, AFRM, AMD, AMZN, APLD, APP, COIN, CRDO, GOOG, HIMS, HOOD, MARA, MSTR, NBIS, NFLX, NVDA, OKLO, ONDS, PLTR, QQQ, RIOT, ROOT, SEZL, SOFI, SPY, TEM, TSLA, ZETA.
 
 **Read the full writeup:** [docs/blog-draft-ml-model.mdx](docs/blog-draft-ml-model.mdx)
 
@@ -10,16 +10,20 @@ Trained on 363K simulated option trades from OptionsDX historical EOD chains (20
 
 | Model | Question | Key Metric |
 |-------|----------|------------|
-| `hit50` | Will this short option reach 50% profit? | AUC 0.982 |
+| `hit50` | Will this short option reach 50% profit? | AUC 0.975 |
 | `maxprofit` | What % of max profit at expiry? | R² 0.70 |
 | `days50` | How many days to 50% profit? | MAE 2.8 days |
 | `ev` | Expected dollar P&L? | R² 0.87 |
 | `outcome` | Full win / partial / breakeven / loss? | Accuracy 82.7% |
 
+## V6 → V7
+
+- **V6:** 6 mega-cap tickers (AAPL, NVDA, QQQ, SPX, SPY, TSLA), 19 features, AUC 0.982 — high accuracy but narrow universe. Models learned the specific vol regimes of a small set of large-cap names.
+- **V7:** Expanded to 28 tickers including small/mid-cap names (HOOD, HIMS, SOFI, MSTR, RIOT, etc.). Initial AUC crashed to ~0.90 — the model struggled with the wider range of vol regimes and liquidity profiles. Added 11 engineered features (credit_pct, iv_vs_ticker_avg, return_5d/10d/20d, rv_20d, rv_iv_ratio, iv_skew_proxy, dte_bucket, theta_vega_ratio, delta_moneyness) + hyperparameter tuning via two-phase grid search → AUC recovered to 0.975. More generalizable across diverse tickers but slightly lower peak accuracy than V6.
+
 ## Important caveats
 
 - Trained on **simulated trades using EOD mid-prices** — no slippage, no commissions, no bid-ask spread
-- Narrow universe: 6 tickers (all mega-cap / index)
 - Backtest numbers are directionally interesting but not a P&L you'd actually realize
 - The 88% base win rate for delta-selected premium selling is already high — the model improves on an already-good baseline
 - `annualized_return` is the top feature by SHAP importance and is derived from premium, which is closely related to the target. Not target leakage (it's known at entry), but worth noting.
@@ -39,6 +43,9 @@ scripts/
   inspect_all_models.py    # SHAP across all 5 models
   validate_training_data.py # Data quality checks
   serve_model.py           # FastAPI server for real-time scoring
+  polygon-to-optionsdx.py  # Fetch Polygon historical options → OptionsDX format
+  enhance_features.py      # Add 11 engineered features + ticker-weighted sampling
+  tune_hyperparams.py      # Two-phase grid search for XGBoost hyperparameters
 models/                    # Pre-trained XGBoost models (JSON)
 shap_output/               # SHAP visualizations (PNG)
 docs/                      # Technical docs + blog writeup
@@ -52,12 +59,16 @@ pip install -r requirements.txt
 # Score a single option (using pre-trained models)
 python scripts/serve_model.py
 # → FastAPI server at http://localhost:8001
-# → POST /score with 19 features → returns probability, EV, SHAP explanation
+# → POST /score with 30 features → returns probability, EV, SHAP explanation
 
 # Retrain from scratch (requires OptionsDX data)
 python scripts/build_training_data.py --data-dir /path/to/optionsdx/ --out data/training.csv
+python scripts/enhance_features.py data/training.csv
 python scripts/train_model.py --data data/training.csv --out models/
 python scripts/analyze_shap.py --data data/training.csv --model-dir models/
+
+# Fetch new data from Polygon (requires POLYGON_API_KEY in .env.local)
+python scripts/polygon-to-optionsdx.py --all --out data/optionsdx
 ```
 
 ## SHAP feature importance
