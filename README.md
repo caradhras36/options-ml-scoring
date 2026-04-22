@@ -4,8 +4,6 @@ A 5-model XGBoost pipeline that scores covered calls and cash-secured puts using
 
 Trained on 461K simulated option trades from OptionsDX historical EOD chains (2020-2026) across 28 tickers: AAPL, AFRM, AMD, AMZN, APLD, APP, COIN, CRDO, GOOG, HIMS, HOOD, MARA, MSTR, NBIS, NFLX, NVDA, OKLO, ONDS, PLTR, QQQ, RIOT, ROOT, SEZL, SOFI, SPY, TEM, TSLA, ZETA.
 
-**Read the full writeup:** [docs/blog-draft-ml-model.mdx](docs/blog-draft-ml-model.mdx)
-
 ## What the models predict
 
 | Model | Question | Key Metric |
@@ -28,7 +26,7 @@ Trained on 461K simulated option trades from OptionsDX historical EOD chains (20
 - The 88% base win rate for delta-selected premium selling is already high — the model improves on an already-good baseline
 - `annualized_return` is the top feature by SHAP importance and is derived from premium, which is closely related to the target. Not target leakage (it's known at entry), but worth noting.
 
-See [Known Limitations](docs/blog-draft-ml-model.mdx#known-limitations) for more.
+See the V6 → V7 section above for what changed and why.
 
 ## Project structure
 
