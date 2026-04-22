@@ -6,7 +6,7 @@ Loads trained XGBoost models and serves predictions via REST API.
 Next.js calls this from API routes for live scoring.
 
 Usage:
-  python3 scripts/serve_model.py --models ./models --port 8001
+  python3 scripts/serve_model.py --models ./models/v7 --port 8001
 
 Endpoints:
   POST /predict      — score a single option candidate
@@ -495,7 +495,7 @@ def load_models(model_dir: str):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--models', default='./models', help='Model directory')
+    parser.add_argument('--models', default='./models/v7', help='Model directory')
     parser.add_argument('--port', type=int, default=8001)
     parser.add_argument('--host', default='0.0.0.0')
     args = parser.parse_args()

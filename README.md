@@ -46,7 +46,11 @@ scripts/
   polygon-to-optionsdx.py  # Fetch Polygon historical options → OptionsDX format
   enhance_features.py      # Add 11 engineered features + ticker-weighted sampling
   tune_hyperparams.py      # Two-phase grid search for XGBoost hyperparameters
-models/                    # Pre-trained XGBoost models (JSON)
+models/
+  v6/                      # V6 models (6 tickers, 19 features, AUC 0.982)
+  v7/                      # V7 models (28 tickers, 30 features, AUC 0.975)
+notebooks/
+  example_inference.ipynb   # Load models, score a candidate, SHAP explanation
 shap_output/               # SHAP visualizations (PNG)
 docs/                      # Technical docs + blog writeup
 ```
@@ -64,8 +68,8 @@ python scripts/serve_model.py
 # Retrain from scratch (requires OptionsDX data)
 python scripts/build_training_data.py --data-dir /path/to/optionsdx/ --out data/training.csv
 python scripts/enhance_features.py data/training.csv
-python scripts/train_model.py --data data/training.csv --out models/
-python scripts/analyze_shap.py --data data/training.csv --model-dir models/
+python scripts/train_model.py --data data/training.csv --out models/v7/
+python scripts/analyze_shap.py --data data/training.csv --model-dir models/v7/
 
 # Fetch new data from Polygon (requires POLYGON_API_KEY in .env.local)
 python scripts/polygon-to-optionsdx.py --all --out data/optionsdx
