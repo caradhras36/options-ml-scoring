@@ -2,13 +2,13 @@
 
 A 5-model XGBoost pipeline that scores covered calls and cash-secured puts using 30 features (Greeks, IV regime, technicals, earnings proximity, momentum, vol risk premium).
 
-Trained on 461K simulated option trades from OptionsDX historical EOD chains (2020-2026) across 28 tickers: AAPL, AFRM, AMD, AMZN, APLD, APP, COIN, CRDO, GOOG, HIMS, HOOD, MARA, MSTR, NBIS, NFLX, NVDA, OKLO, ONDS, PLTR, QQQ, RIOT, ROOT, SEZL, SOFI, SPY, TEM, TSLA, ZETA.
+Trained on ~461K usable training rows distilled from 1.38M candidate option chain rows (OptionsDX + Polygon 2020-2026) across 28 tickers: AAPL, AFRM, AMD, AMZN, APLD, APP, COIN, CRDO, GOOG, HIMS, HOOD, MARA, MSTR, NBIS, NFLX, NVDA, OKLO, ONDS, PLTR, QQQ, RIOT, ROOT, SEZL, SOFI, SPY, TEM, TSLA, ZETA. The candidate → usable reduction comes from DTE/delta filters, rolling-window NaN drops (RSI/IVR need 252 days), and ticker balancing (cap 30K rows/ticker).
 
 ## What the models predict
 
 | Model | Question | Key Metric |
 |-------|----------|------------|
-| `hit50` | Will this short option reach 50% profit? | AUC 0.975 |
+| `hit50` | Will this short option reach 50% profit? | AUC 0.974 |
 | `maxprofit` | What % of max profit at expiry? | R² 0.70 |
 | `days50` | How many days to 50% profit? | MAE 2.8 days |
 | `ev` | Expected dollar P&L? | R² 0.87 |
@@ -17,7 +17,7 @@ Trained on 461K simulated option trades from OptionsDX historical EOD chains (20
 ## V6 → V7
 
 - **V6:** 6 mega-cap tickers (AAPL, NVDA, QQQ, SPX, SPY, TSLA), 19 features, AUC 0.982 — high accuracy but narrow universe. Models learned the specific vol regimes of a small set of large-cap names.
-- **V7:** Expanded to 28 tickers including small/mid-cap names (HOOD, HIMS, SOFI, MSTR, RIOT, etc.). Initial AUC crashed to ~0.90 — the model struggled with the wider range of vol regimes and liquidity profiles. Added 11 engineered features (credit_pct, iv_vs_ticker_avg, return_5d/10d/20d, rv_20d, rv_iv_ratio, iv_skew_proxy, dte_bucket, theta_vega_ratio, delta_moneyness) + hyperparameter tuning via two-phase grid search → AUC recovered to 0.975. More generalizable across diverse tickers but slightly lower peak accuracy than V6.
+- **V7:** Expanded to 28 tickers including small/mid-cap names (HOOD, HIMS, SOFI, MSTR, RIOT, etc.). Initial AUC crashed to ~0.90 — the model struggled with the wider range of vol regimes and liquidity profiles. Added 11 engineered features (credit_pct, iv_vs_ticker_avg, return_5d/10d/20d, rv_20d, rv_iv_ratio, iv_skew_proxy, dte_bucket, theta_vega_ratio, delta_moneyness) + hyperparameter tuning via two-phase grid search → AUC recovered to 0.974. More generalizable across diverse tickers but slightly lower peak accuracy than V6.
 
 ## Important caveats
 
@@ -46,7 +46,7 @@ scripts/
   tune_hyperparams.py      # Two-phase grid search for XGBoost hyperparameters
 models/
   v6/                      # V6 models (6 tickers, 19 features, AUC 0.982)
-  v7/                      # V7 models (28 tickers, 30 features, AUC 0.975)
+  v7/                      # V7 models (28 tickers, 30 features, AUC 0.974)
 notebooks/
   example_inference.ipynb   # Load models, score a candidate, SHAP explanation
 shap_output/               # SHAP visualizations (PNG)
@@ -62,12 +62,25 @@ pip install -r requirements.txt
 python scripts/serve_model.py
 # → FastAPI server at http://localhost:8001
 # → POST /score with 30 features → returns probability, EV, SHAP explanation
+```
 
-# Retrain from scratch (requires OptionsDX data)
-python scripts/build_training_data.py --data-dir /path/to/optionsdx/ --out data/training.csv
-python scripts/enhance_features.py data/training.csv
-python scripts/train_model.py --data data/training.csv --out models/v7/
-python scripts/analyze_shap.py --data data/training.csv --model-dir models/v7/
+## Reproducing results
+
+```bash
+# 1. Build training data from OptionsDX + Polygon extracted chains
+python scripts/build_training_data.py path/to/optionsdx \
+  --exclude VIX,SPX --out training_v7.csv
+
+# 2. Enhance features + balance tickers (30K cap/ticker)
+python scripts/enhance_features.py training_v7.csv \
+  --target-per-ticker 30000
+
+# 3. Train 5 XGBoost models with tuned hyperparameters
+python scripts/train_model.py training_v7_enhanced.csv --out ./models/v7/
+
+# 4. Backtest on time-based holdout (2025-01-22 to 2026-03-27)
+python scripts/backtest.py training_v7_enhanced.csv \
+  --threshold 0.85 --start 2025-01-22 --end 2026-03-27
 
 # Fetch new data from Polygon (requires POLYGON_API_KEY in .env.local)
 python scripts/polygon-to-optionsdx.py --all --out data/optionsdx
